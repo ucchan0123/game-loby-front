@@ -23,7 +23,7 @@ axios.interceptors.response.use(
       console.error(i18n.global.t(`error.${error.response.status}`))
     }
     if (error.response.status === 422) {
-      console.error('バリデーションエラー')
+      console.error(error.response.data.error_messages)
     }
     if (error.response.status === 500) {
       console.error(i18n.global.t(`error.${error.response.status}`))
