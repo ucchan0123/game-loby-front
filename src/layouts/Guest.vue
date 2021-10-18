@@ -15,6 +15,9 @@ export default defineComponent({
   setup() {
     onMounted(() => {
       axios.get('/sanctum/csrf-cookie')
+        .then((res) => {
+          console.log(res)
+        })
         .catch((error) => {
           console.log(error)
         })
