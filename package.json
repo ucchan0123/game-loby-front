@@ -45,6 +45,6 @@
     "vue-cli-plugin-tailwind": "~2.0.6"
   },
   "engines": {
-    "node": "14.x"
+    "node": "16.x"
   }
 }
