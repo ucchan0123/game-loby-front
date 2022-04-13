@@ -20,7 +20,7 @@
             </td>
           </tr>
           <tr>
-            <th>お問い合せ内容</th>
+            <th>お問い合わせ内容</th>
             <td>
               <input v-model="message" />
             </td>
@@ -118,48 +118,59 @@ li {
 }
 </style>
 
-
 <script>
 import axios from "axios";
 export default {
   data: function () {
     return {
       name: "",
+      kana: "",
+      tel: "",
       email: "",
-      message: "",
       result: "",
     };
   },
   computed: {
     chackName: function () {
       if (!this.name) {
-        return "お名前を入力してください";
+        return 'お名前を入力してください';
       }
-      return "";
+      return '';
+    },
+    chackKana: function () {
+      if (!this.kana) {
+        return 'フリガナを入力してください';
+      } else if (!this.validKatakana(this.kana)) {
+        return 'フリガナをカタカナで入力してください';
+      }
+      return '';
+    },
+    checkTel: function () {
+      if (!this.tel) {
+        return '電話番号を入力してください';
+      } else if (!this.validTel(this.tel)) {
+        return '電話番号を正しく入力してください';
+      }
+      return '';
     },
     chackEmail: function () {
       if (!this.email) {
-        return "メールアドレスを入力してください";
+        return 'メールアドレスを入力してください';
       } else if (!this.validEmail(this.email)) {
-        return "メールアドレスを正しく入力してください";
+        return 'メールアドレスを正しく入力してください';
       }
-      return "";
-    },
-    checkMessage: function () {
-      if (!this.message) {
-        return "お問い合わせ内容を入力してください";
-      }
-      return "";
+      return '';
     },
     errors: function () {
       const errors = {
         name: this.chackName,
+        kana: this.chackKana,
+        tel: this.checkTel,
         email: this.chackEmail,
-        message: this.checkMessage,
       };
       for (var key in errors) {
         if (
-          errors[key] === "" ||
+          errors[key] === '' ||
           errors[key] === null ||
           errors[key] === undefined
         ) {
@@ -176,16 +187,17 @@ export default {
     submit: async function () {
       const result = await this.send();
       this.result = result;
-      if (result === "送信完了") {
+      if (result === '送信完了') {
         this.clear();
       }
     },
     send: async function () {
-      const url = "http://localhost/api/contact/send.php";
+      const url = 'http://localhost/api/contact/send.php';
       const params = {
         name: this.name,
+        kana: this.kana,
+        tel: this.tel,
         email: this.email,
-        message: this.message,
       };
       return await axios
         .post(url, params)
@@ -196,15 +208,24 @@ export default {
           console.log(error);
         });
     },
+    validKatakana: function (kana) {
+      const re = /^[ァ-ンｧ-ﾝ\x20\u3000ﾞﾟ]*$/;
+      return re.test(kana);
+    },
+    validTel: function (tel) {
+      const re = /^(0[5-9]0[0-9]{8}|0[1-9][1-9][0-9]{7})$/;
+      return re.test(tel);
+    },
     validEmail: function (email) {
       const re =
         /^[a-zA-Z0-9_+-]+(.[a-zA-Z0-9_+-]+)*@([a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]*\.)+[a-zA-Z]{2,}$/;
       return re.test(email);
     },
     clear: function () {
-      this.name = "";
-      this.email = "";
-      this.message = "";
+      this.name = '';
+      this.kana = '';
+      this.tel = '';
+      this.email = '';
     },
   },
 };
