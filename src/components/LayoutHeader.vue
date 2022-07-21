@@ -5,7 +5,7 @@
     </div>
     <div class="col-span-8">
       <router-link to="/home">
-        <h1 class="text-center font-bold text-yellow-500">Nギルド会員サイト</h1>
+        <h1 class="text-center font-bold text-yellow-500">ロビー</h1>
       </router-link>
     </div>
     <div class="col-span-2" />

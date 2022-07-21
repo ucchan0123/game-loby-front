@@ -17,10 +17,6 @@ const routes: Array<RouteRecordRaw> = [
     component: Home
   },
   {
-    path: '/contact',
-    component: Contact
-  },
-  {
     path: '/account',
     component: Account
   },
